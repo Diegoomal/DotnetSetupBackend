@@ -2,7 +2,7 @@ name: GitHub Actions CI
 
 on:
     push:
-        branches: ["homologation"]
+        branches: ["main"] #["homologation"]
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
 
     services:
         postgres:
-          image: postgres
+          image: postgres:latest
           env:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: pwd123
@@ -40,6 +40,10 @@ jobs:
 
     - name: Build
       run: dotnet build
+
+    - name: Executar script SQL para criar tabela
+      run: |
+        cat .github\workflows\scripts\script.sql | psql -h localhost -U test_user -d test_database -p 5432 -a
     
     - name: Run tests
       run: dotnet test --no-build

@@ -4,34 +4,34 @@ public class UnitTestPerson
     [Fact]
     public void CanCreatePerson()
     {
-        // // Arrange
-        // Person personToCreate = new Person() {
-        //     Name = "Diego",
-        //     Lastname = "Maldonado"
-        // };
+        // Arrange
+        Person personToCreate = new Person() {
+            Name = "Diego",
+            Lastname = "Maldonado"
+        };
 
-        // Facade facade = new Facade();
+        Facade facade = new Facade();
         
-        // // Act
-        // Result result = facade.Create(personToCreate);
+        // Act
+        Result result = facade.Create(personToCreate);
 
-        // // Assert
-        // Assert.True(string.IsNullOrEmpty(result.Msg), $"Validation Error: {result.Msg}");
+        // Assert
+        Assert.True(string.IsNullOrEmpty(result.Msg), $"Validation Error: {result.Msg}");
 
-        // Assert.NotNull(result.Entities);
-        // Assert.Single(result.Entities);
+        Assert.NotNull(result.Entities);
+        Assert.Single(result.Entities);
 
-        // IEntity entity = result.Entities.First();
-        // Assert.IsType<Person>(entity);
+        IEntity entity = result.Entities.First();
+        Assert.IsType<Person>(entity);
 
-        // Person createdPerson = (Person)entity;
-        // Assert.NotEqual(0, createdPerson.Id);
+        Person createdPerson = (Person)entity;
+        Assert.NotEqual(0, createdPerson.Id);
 
-        // // Pode adicionar mais verificações específicas sobre o objeto criado, se necessário
-        // Assert.Equal(personToCreate.Name, createdPerson.Name);
-        // Assert.Equal(personToCreate.Lastname, createdPerson.Lastname);
+        // Pode adicionar mais verificações específicas sobre o objeto criado, se necessário
+        Assert.Equal(personToCreate.Name, createdPerson.Name);
+        Assert.Equal(personToCreate.Lastname, createdPerson.Lastname);
 
-        Assert.True(true, "Unity test bypass");
+        // Assert.True(true, "Unity test bypass");
     }
 
     [Fact]
