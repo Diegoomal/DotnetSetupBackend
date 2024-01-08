@@ -32,6 +32,15 @@ jobs:
 
     steps:
 
+      - name: Start PostgreSQL on Ubuntu
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+
+      - name: Create additional user
+        run: |
+            sudo -u postgres psql --command="CREATE USER ${{env.PGSQL_USER}} PASSWORD '${{env.PGSQL_PASSWORD}}'" --command="\du"
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
