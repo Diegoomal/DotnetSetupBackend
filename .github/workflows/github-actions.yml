@@ -23,9 +23,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: $PGSQL_USER
-          POSTGRES_PASSWORD: $PGSQL_PASSWORD
-          POSTGRES_DB: $PGSQL_DB
+          POSTGRES_USER: ${{env.PGSQL_USER}}
+          POSTGRES_PASSWORD: ${{env.PGSQL_PASSWORD}}
+          POSTGRES_DB: ${{env.PGSQL_DB}}
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -47,7 +47,7 @@ jobs:
 
       - name: Executar script SQL para criar tabela
         run: |
-          cat scripts\create_table_person.sql | psql -h localhost -U $PGSQL_USER -d $PGSQL_DB -p 5432 -a
+          cat scripts\create_table_person.sql | psql -h localhost -U ${{env.PGSQL_USER}} -d ${{env.PGSQL_DB}} -p ${{env.PGSQL_PASSWORD}} 5432 -a
     
       - name: Run tests
         run: dotnet test --no-build
