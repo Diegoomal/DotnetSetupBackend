@@ -43,7 +43,7 @@ jobs:
 
     - name: Executar script SQL para criar tabela
       run: |
-        cat .github\workflows\scripts\script.sql | psql -h localhost -U test_user -d test_database -p 5432 -a
+        cat scripts\create_table_person.sql | psql -h localhost -U test_user -d test_database -p 5432 -a
     
     - name: Run tests
       run: dotnet test --no-build
