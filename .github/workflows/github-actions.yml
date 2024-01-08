@@ -48,7 +48,7 @@ jobs:
       
       - name: Executar script SQL para criar tabela
         run:
-          cat scripts\create_table_person.sql | psql -h localhost -U ${{env.PGSQL_USER}} -d ${{env.PGSQL_DB}} -p 5432 ${{env.PGSQL_PASSWORD}} -a
+          cat scripts\create_table_person.sql | psql -h localhost -U ${{env.PGSQL_USER}} -d ${{env.PGSQL_DB}} -p 5432
 
       - name: Run tests
         run: dotnet test --no-build
