@@ -1,49 +1,53 @@
 name: GitHub Actions CI
 
 on:
-    push:
-        branches: ["main"] #["homologation"]
+  push:
+    branches: ["main"]
 
 jobs:
   build:
-    
     strategy:
-        fail-fast: true
-        matrix:
-          os: [ubuntu-latest]       # [ubuntu-latest, windows-latest, macos-latest]
-          dotnet-version: ["8.0"]   # ['2.1', '2.2', '3.0', '3.1', '5.0', '6.0', '7.0', '8.0']
-    
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        dotnet-version: ["8.0"]
+
     runs-on: ${{ matrix.os }}
 
+    env:
+      PGSQL_USER: postgres
+      PGSQL_PASSWORD: pwd123
+      PGSQL_DB: project
+
     services:
-        postgres:
-          image: postgres:latest
-          env:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: pwd123
-            POSTGRES_DB: project
-          ports:
-            - 5432:5432
-          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: ${{ PGSQL_USER }}
+          POSTGRES_PASSWORD: ${{ PGSQL_PASSWORD }}
+          POSTGRES_DB: ${{ PGSQL_DB }}
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build
-      run: dotnet build
+      - name: Build
+        run: dotnet build
 
-    - name: Executar script SQL para criar tabela
-      run: |
-        cat scripts\create_table_person.sql | psql -h localhost -U test_user -d test_database -p 5432 -a
+      - name: Executar script SQL para criar tabela
+        run: |
+          cat scripts\create_table_person.sql | psql -h localhost -U $PGSQL_USER -d $PGSQL_DB -p 5432 -a
     
-    - name: Run tests
-      run: dotnet test --no-build
+      - name: Run tests
+        run: dotnet test --no-build
