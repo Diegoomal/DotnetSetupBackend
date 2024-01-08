@@ -2,10 +2,10 @@
 
 ## Struct
 
-(solution) DotnetSetupBackend
-(project)(classlib) SetupBackend
-(project)(console)  SetupBackend.Console
-(project)(xunit)    SetupBackend.Tests
+- (solution) DotnetSetupBackend
+- (project)(classlib) SetupBackend
+- (project)(console)  SetupBackend.Console
+- (project)(xunit)    SetupBackend.Tests
 
 ## cmds dotnet
 
